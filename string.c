@@ -6,7 +6,7 @@
 /*   By: hboutale <hboutale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 08:46:45 by hboutale          #+#    #+#             */
-/*   Updated: 2024/09/15 10:58:47 by hboutale         ###   ########.fr       */
+/*   Updated: 2024/09/15 14:01:00 by hboutale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	is_empty_line(char *line)
 	{
 		if (line[i] != ' ')
 			return (0);
+		i++;
 	}
 	return (1);
 }
@@ -75,8 +76,8 @@ int	string_has(char *str, char c)
 
 int	count_words(char *str, char *charset)
 {
-	int res;
-	int i;
+	int	res;
+	int	i;
 
 	i = 0;
 	res = 0;
@@ -92,4 +93,26 @@ int	count_words(char *str, char *charset)
 			i++;
 	}
 	return (res);
+}
+
+int	ft_strcmp(char *s1, char *s2)
+{
+	int	i;
+
+	i = 0;
+	while (s1[i] && s2[i] && s1[i] == s2[i])
+		i++;
+	return (s1[i] - s2[i]);
+}
+
+int	ft_strncmp(char *s1, char *s2, unsigned int n)
+{
+	unsigned int i;
+
+	i = 0;
+	if (n == 0)
+		return (0);
+	while (s1[i] && s2[i] && i < n - 1 && s1[i] == s2[i])
+		i++;
+	return (s1[i] - s2[i]);
 }

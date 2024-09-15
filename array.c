@@ -6,7 +6,7 @@
 /*   By: hboutale <hboutale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 09:12:45 by hboutale          #+#    #+#             */
-/*   Updated: 2024/09/15 11:56:48 by hboutale         ###   ########.fr       */
+/*   Updated: 2024/09/15 14:49:44 by hboutale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	resize(t_array *arr)
 	while (i < arr->cap)
 	{
 		new_array[i] = arr->array[i];
+		arr->array[i] = 0;
 		i++;
 	}
 	free(arr->array);
@@ -60,7 +61,17 @@ void	insert(t_array *arr, char c)
 		resize(arr);
 	arr->array[arr->size++] = c;
 }
+void	insert_str(t_array *arr, char *s)
+{
+	int	i;
 
+	i = 0;
+	while (s[i])
+	{
+		insert(arr, s[i]);
+		i++;
+	}
+}
 char	get(t_array *arr, int i)
 {
 	if (i < 0 || i >= arr->size)

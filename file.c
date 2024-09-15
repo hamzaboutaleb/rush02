@@ -6,7 +6,7 @@
 /*   By: hboutale <hboutale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 08:36:55 by hboutale          #+#    #+#             */
-/*   Updated: 2024/09/15 11:59:58 by hboutale         ###   ########.fr       */
+/*   Updated: 2024/09/15 13:32:51 by hboutale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,18 @@
 char	*get_line(int fd)
 {
 	t_array	*arr;
-	int		c;
+	char	c;
 	char	*res;
 	int		bytes;
 
 	arr = init_array(16);
 	bytes = read(fd, &c, 1);
-	while (bytes && c != '\n')
+	while (bytes > 0 && c != '\n' && c != -1)
 	{
 		insert(arr, c);
 		bytes = read(fd, &c, 1);
 	}
-	if (arr->size == 0)
+	if (arr->size == 0 && c != '\n')
 	{
 		free_array(arr);
 		return (NULL);
@@ -48,7 +48,6 @@ int	count_lines(char *filename)
 	line = get_line(fd);
 	while (line)
 	{
-		
 		if (!is_empty_line(line))
 			count++;
 		free(line);

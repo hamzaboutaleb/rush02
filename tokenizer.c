@@ -6,7 +6,7 @@
 /*   By: hboutale <hboutale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 09:53:36 by hboutale          #+#    #+#             */
-/*   Updated: 2024/09/15 12:08:07 by hboutale         ###   ########.fr       */
+/*   Updated: 2024/09/15 14:46:07 by hboutale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	*free_tokens(t_token *tokens, int end)
 	return (NULL);
 }
 
-t_token	*parse_file(char *filename, int number_line, t_token *res)
+t_token	*parse_file(char *filename, t_token *res)
 {
 	char	*line;
 	int		k;
@@ -61,24 +61,23 @@ t_token	*parse_file(char *filename, int number_line, t_token *res)
 		return (NULL);
 	}
 	k = 0;
-	number_line++;
 	line = get_line(fd);
 	while (line)
 	{
-		printf("%d\n", k);
-		if (count_words(line, ":") < 2)
-		{
-			free(res);
-			free(line);
-			return (NULL);
-		}
 		if (!is_empty_line(line))
 		{
-			if (!insert_token(res, k, line))
+			if (count_words(line, ":") < 2)
+			{
+				free(res);
+				free(line);
+				return (NULL);
+			}
+			if (!insert_token(res, k, line) || ft_strlen(res[k].key) == 0
+				|| ft_strlen(res[k].value) == 0)
 				return (free_tokens(res, k));
+			k++;
 		}
 		free(line);
-		k++;
 		line = get_line(fd);
 	}
 	res[k].key = NULL;
@@ -112,6 +111,85 @@ int	insert_token(t_token *tokens, int idx, char *line)
 	i = skip_end(line, i);
 	end = i;
 	tokens[idx].value = str_dup(line, start, end);
-	printf("key: %s value %s\n", tokens[idx].key, tokens[idx].value);
 	return (1);
+}
+
+char	*search(t_token *tokens, char *s)
+{
+	int	i;
+
+	i = 0;
+	while (tokens[i].key != NULL)
+	{
+		if (ft_strcmp(tokens[i].key, s) == 0)
+		{
+			return (tokens[i].value);
+		}
+		i++;
+	}
+	return (NULL);
+}
+
+char	*searchn(t_token *tokens, char *s, int n)
+{
+	int	i;
+
+	i = 0;
+	while (tokens[i].key != NULL)
+	{
+		if (ft_strncmp(tokens[i].key, s, n) == 0)
+		{
+			return (tokens[i].value);
+		}
+		i++;
+	}
+	return (NULL);
+}
+
+char	*get_token_length(t_token *token, int n)
+{
+	int	i;
+
+	i = 0;
+	while (token[i].key)
+	{
+		if (ft_strlen(token[i].key) == n)
+		{
+			return (token[i].value);
+		}
+		i++;
+	}
+	return (NULL);
+}
+
+char	*get_tens(t_token *token, char *s)
+{
+	int	i;
+
+	i = 0;
+	while (token[i].key)
+	{
+		if (ft_strlen(token[i].key) == 2 && token[i].key[0] == s[0])
+		{
+			return (token[i].value);
+		}
+		i++;
+	}
+	return (NULL);
+}
+
+char	*get_unit(t_token *token, char *s)
+{
+	int	i;
+
+	i = 0;
+	while (token[i].key)
+	{
+		if (ft_strlen(token[i].key) == 1 && token[i].key[0] == s[0])
+		{
+			return (token[i].value);
+		}
+		i++;
+	}
+	return (NULL);
 }

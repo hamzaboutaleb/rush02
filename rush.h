@@ -6,7 +6,7 @@
 /*   By: hboutale <hboutale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 08:42:19 by hboutale          #+#    #+#             */
-/*   Updated: 2024/09/15 12:03:02 by hboutale         ###   ########.fr       */
+/*   Updated: 2024/09/15 14:25:02 by hboutale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int			ft_strlen(char *s);
 int			is_empty_line(char *line);
 char		*str_dup(char *line, int start, int end);
 int			count_words(char *str, char *charset);
-
+int			ft_strcmp(char *s1, char *s2);
+int			ft_strncmp(char *s1, char *s2, unsigned int n);
 // FILE 0
 char		*get_line(int fd);
 
@@ -52,7 +53,12 @@ t_array		*init_array(int cap);
 void		insert(t_array *arr, char c);
 char		get(t_array *arr, int i);
 void		free_array(t_array *arr);
-
+void		insert_str(t_array *arr, char *s);
 // TOKEN 0
-t_token		*parse_file(char *filename, int number_line, t_token *res);
+t_token		*parse_file(char *filename, t_token *res);
 int			insert_token(t_token *tokens, int idx, char *line);
+char		*search(t_token *tokens, char *s);
+char		*searchn(t_token *tokens, char *s, int n);
+char		*get_token_length(t_token *token, int n);
+char		*get_tens(t_token *token, char *s);
+char		*get_unit(t_token *token, char *s);
