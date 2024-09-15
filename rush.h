@@ -6,7 +6,7 @@
 /*   By: hboutale <hboutale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 08:42:19 by hboutale          #+#    #+#             */
-/*   Updated: 2024/09/15 09:49:56 by hboutale         ###   ########.fr       */
+/*   Updated: 2024/09/15 12:03:02 by hboutale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,27 @@ typedef struct
 	char	*dict;
 }			t_args;
 
-typedef struct {
-	char *value;
-} token;
+typedef struct
+{
+	char	*key;
+	char	*value;
+}			t_token;
 
-// STRING
+// STRING 0
 void		ft_putstr(char *s);
 int			ft_strlen(char *s);
-// FILE
-char		*get_line(int fd);
-// NUMBERS
-int			is_number(char *s);
+int			is_empty_line(char *line);
+char		*str_dup(char *line, int start, int end);
+int			count_words(char *str, char *charset);
 
-// ARRAY
+// FILE 0
+char		*get_line(int fd);
+
+int			count_lines(char *filename);
+// NUMBERS 0
+int			is_number(char *s);
+int			is_digit(char c);
+// ARRAY 0
 typedef struct
 {
 	char	*array;
@@ -44,3 +52,7 @@ t_array		*init_array(int cap);
 void		insert(t_array *arr, char c);
 char		get(t_array *arr, int i);
 void		free_array(t_array *arr);
+
+// TOKEN 0
+t_token		*parse_file(char *filename, int number_line, t_token *res);
+int			insert_token(t_token *tokens, int idx, char *line);

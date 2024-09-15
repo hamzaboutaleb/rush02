@@ -1,4 +1,4 @@
-SRCS = main.c file.c number.c string.c array.c
+SRCS = main.c file.c number.c string.c array.c tokenizer.c
 OBJS = $(SRCS:.c=.o)
 NAME = rush-02
 CC = cc

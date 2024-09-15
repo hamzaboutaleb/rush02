@@ -6,7 +6,7 @@
 /*   By: hboutale <hboutale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 09:12:45 by hboutale          #+#    #+#             */
-/*   Updated: 2024/09/15 09:30:53 by hboutale         ###   ########.fr       */
+/*   Updated: 2024/09/15 11:56:48 by hboutale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,11 @@ void	resize(t_array *arr)
 	i = 0;
 	new_cap = arr->cap * 2;
 	new_array = (char *)malloc(sizeof(char) * new_cap);
+	if (new_array == NULL)
+	{
+		printf("malloc error\n");
+		return ;
+	}
 	while (i < arr->cap)
 	{
 		new_array[i] = arr->array[i];
@@ -51,7 +56,7 @@ void	resize(t_array *arr)
 
 void	insert(t_array *arr, char c)
 {
-	if (arr->size == arr->cap)
+	if (arr->size >= arr->cap)
 		resize(arr);
 	arr->array[arr->size++] = c;
 }

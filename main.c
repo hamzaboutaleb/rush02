@@ -6,7 +6,7 @@
 /*   By: hboutale <hboutale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 08:35:57 by hboutale          #+#    #+#             */
-/*   Updated: 2024/09/15 09:48:17 by hboutale         ###   ########.fr       */
+/*   Updated: 2024/09/15 12:08:24 by hboutale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,22 @@ int	check_args(t_args *args)
 int	main(int ac, char **av)
 {
 	t_args args;
-	int fd;
-	char *line;
+	int number_lines;
+	t_token *tokens;
 
 	if (!init_args(&args, ac, av) && !check_args(&args))
 		return (1);
-	printf("filen name %s\n", args.dict);
-	fd = open(args.dict, O_RDONLY);
-	if (fd < 0)
+
+	number_lines = count_lines(args.dict);
+	tokens = (t_token *)malloc(sizeof(t_token) * (number_lines + 1));
+	tokens = parse_file(args.dict, number_lines, tokens);
+	if (tokens == NULL)
 	{
-		ft_putstr("Error: Cannot Read file\n");
-		return (1);
+		ft_putstr("Dict Error\n");
+		return (0);
 	}
-	while ((line = get_line(fd)))
+	for (int i = 0; tokens[i].key != NULL; i++)
 	{
-		printf("%s\n", line);
+		printf("kye: %s value %s\n", tokens[i].key, tokens[i].value);
 	}
 }
